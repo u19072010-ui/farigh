@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BeautyOfBeaches – Discover the Beauty of Beaches</title>
+  <meta name="description" content="Explore the world's most beautiful beaches, one destination at a time." />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,700;1,500;1,700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ========== HERO ========== -->
+  <header class="hero" id="home">
+    <div class="hero__bg" aria-hidden="true"></div>
+
+    <!-- Background video (falls back to the image/gradient above if it can't play) -->
+    <video class="hero__video" id="heroVideo" autoplay muted loop playsinline preload="auto"
+           poster="images/hero-beach.jpg" aria-hidden="true" tabindex="-1">
+      <source src="videos/hero.webm" type="video/webm" />
+      <source src="videos/hero.mp4" type="video/mp4" />
+    </video>
+    <div class="hero__overlay" aria-hidden="true"></div>
+    <canvas class="hero__particles" id="particles" aria-hidden="true"></canvas>
+
+    <!-- Navbar -->
+    <nav class="nav" aria-label="Main navigation">
+      <a href="#home" class="nav__logo">
+        <span class="nav__logo-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="6" r="2.2" fill="#f3b562" stroke="none"/>
+            <path d="M12 1.5v1M6.5 3.5l.7.7M17.5 3.5l-.7.7"/>
+            <path d="M3 13c2 0 2-1.5 4.5-1.5S10 13 12 13s2-1.5 4.5-1.5S19 13 21 13"/>
+            <path d="M3 17c2 0 2-1.5 4.5-1.5S10 17 12 17s2-1.5 4.5-1.5S19 17 21 17"/>
+            <path d="M3 21c2 0 2-1.5 4.5-1.5S10 21 12 21s2-1.5 4.5-1.5S19 21 21 21"/>
+          </svg>
+        </span>
+        <span class="nav__logo-text">Beauty<em>Of</em>Beaches</span>
+      </a>
+
+      <button class="nav__toggle" id="navToggle" aria-label="Toggle menu" aria-expanded="false" aria-controls="navMenu">
+        <span></span><span></span><span></span>
+      </button>
+
+      <ul class="nav__menu" id="navMenu">
+        <li><a href="#home" class="is-active">Home</a></li>
+        <li class="has-dropdown">
+          <a href="#beaches" aria-haspopup="true">Explore Beaches
+            <svg class="caret" viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </a>
+          <button class="dd-toggle" type="button" aria-label="Show zones" aria-expanded="false">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+          </button>
+          <ul class="dropdown">
+            <li><a href="#beaches" data-filter="all"><i class="dot dot--all"></i>All Beaches<small>16</small></a></li>
+            <li><a href="#beaches" data-filter="north"><i class="dot dot--north"></i>North Zone<small>4</small></a></li>
+            <li><a href="#beaches" data-filter="south"><i class="dot dot--south"></i>South Zone<small>4</small></a></li>
+            <li><a href="#beaches" data-filter="east"><i class="dot dot--east"></i>East Zone<small>4</small></a></li>
+            <li><a href="#beaches" data-filter="west"><i class="dot dot--west"></i>West Zone<small>4</small></a></li>
+          </ul>
+        </li>
+        <li><a href="#zones">Zones</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#queries">Queries</a></li>
+        <li><a href="#contact">Contact Us</a></li>
+        <li><a href="#sitemap">Sitemap</a></li>
+      </ul>
+
+      <div class="nav__extras">
+        <div class="visitors" title="Total visitors">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <span>Visitors:</span>
+          <strong id="visitorCount">0</strong>
+        </div>
+        <a href="#zones" class="compass" aria-label="Find nearby beaches">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Hero content -->
+    <div class="hero__content">
+      <p class="hero__badge">
+        <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M12 2l1.8 5.2L19 9l-5.2 1.8L12 16l-1.8-5.2L5 9l5.2-1.8L12 2zm7 11l.9 2.6L22.5 16.5l-2.6.9L19 20l-.9-2.6-2.6-.9 2.6-.9L19 13zM5 15l.7 2 2 .7-2 .7L5 20.5l-.7-2.1-2-.7 2-.7L5 15z"/></svg>
+        <span id="badgeText">16 Destinations · 4 Zones</span>
+      </p>
+
+      <h1 class="hero__title">
+        <span class="line"><span>Discover the <em>Beauty</em></span></span>
+        <span class="line"><span>of Beaches</span></span>
+      </h1>
+
+      <p class="hero__subtitle">
+        Explore the world's most beautiful beaches, one destination at a time.
+      </p>
+
+      <div class="hero__actions">
+        <a href="#beaches" class="btn btn--primary">Explore Beaches</a>
+        <a href="#gallery" class="btn btn--ghost">View Gallery</a>
+      </div>
+
+      <a href="#beaches" class="hero__scroll" aria-label="Scroll down">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+      </a>
+    </div>
+
+    <!-- Curved bottom edge -->
+    <svg class="hero__curve" viewBox="0 0 1440 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 80V60C300 5 700 0 1000 25c200 17 320 30 440 35v20H0z" fill="#fbf6ec"/>
+    </svg>
+
+    <!-- Live info ticker -->
+    <div class="ticker" role="marquee" aria-label="Live information">
+      <div class="ticker__track" id="tickerTrack"></div>
+    </div>
+  </header>
+
+  <!-- ========== EXPLORE ========== -->
+  <main>
+    <section class="explore" id="welcome" aria-labelledby="exploreTitle">
+      <div class="explore__inner">
+
+        <figure class="explore__media">
+          <img src="images/beach-maldives.jpg" alt="Overwater villas in the Maldives"
+               loading="lazy" />
+          <figcaption class="temp">
+            <strong>28°C</strong>
+            <span>Average water temperature</span>
+          </figcaption>
+        </figure>
+
+        <div class="explore__copy">
+          <p class="eyebrow">Welcome</p>
+          <h2 class="explore__title" id="exploreTitle">Explore. Discover. <em>Escape.</em></h2>
+          <p class="explore__text">
+            BeautyOfBeaches is your guide to the world’s most celebrated shorelines. We organise famous beaches
+            into four geographic zones — North, South, East and West — so you can wander the planet coast by coast,
+            compare destinations, and plan your next escape.
+          </p>
+
+          <ul class="stats">
+            <li class="stat" tabindex="0">
+              <svg class="stat__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>
+              <span class="stat__num"><b data-count="4">4</b></span>
+              <span class="stat__label">Zones</span>
+              <div class="stat__drop" role="note">
+                <p>Pick a coast to start with</p>
+                <div class="chips"><span>North</span><span>South</span><span>East</span><span>West</span></div>
+              </div>
+            </li>
+
+            <li class="stat" tabindex="0">
+              <svg class="stat__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              <span class="stat__num"><b data-count="16">16</b>+</span>
+              <span class="stat__label">Destinations</span>
+              <div class="stat__drop" role="note">
+                <p>Hand-picked beaches, grouped by zone so you can compare them side by side.</p>
+              </div>
+            </li>
+
+            <li class="stat" tabindex="0">
+              <svg class="stat__icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+              <span class="stat__num"><b data-count="50">50</b>+</span>
+              <span class="stat__label">Beach Photos</span>
+              <div class="stat__drop" role="note">
+                <p>See every destination in the gallery before you decide where to go.</p>
+              </div>
+            </li>
+
+            <li class="stat" tabindex="0">
+              <svg class="stat__icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20"/></svg>
+              <span class="stat__num"><b data-count="6">6</b></span>
+              <span class="stat__label">Continents</span>
+              <div class="stat__drop" role="note">
+                <p>Coastlines from every part of the world, all in one place.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== ZONES ========== -->
+    <section class="sec sec--white" id="zones" aria-labelledby="zonesTitle">
+      <div class="sec__inner">
+        <header class="sec-head sec-head--center">
+          <p class="eyebrow">Four directions</p>
+          <h2 class="explore__title" id="zonesTitle">Explore Beaches <em>By Zone</em></h2>
+          <p class="explore__text">Pick a compass point and we'll reveal its most famous shores.</p>
+        </header>
+        <div class="zone-grid" id="zoneGrid"><!-- cards are built in script.js (ZONES) --></div>
+      </div>
+    </section>
+
+    <!-- ========== BEACHES (16 cards, 4 per zone) ========== -->
+    <section class="beaches" id="beaches" aria-labelledby="beachesTitle">
+      <div class="beaches__inner">
+        <header class="beaches__head">
+          <p class="eyebrow">Destinations</p>
+          <h2 class="explore__title" id="beachesTitle">Famous Beaches <em>of the World</em></h2>
+          <p class="explore__text">Handpicked shorelines, each with travel tips and a downloadable guide.</p>
+        </header>
+
+        <div class="tabs" id="beachTabs" role="group" aria-label="Filter beaches by zone">
+          <button class="tab is-active" data-filter="all" aria-pressed="true">All <span>16</span></button>
+          <button class="tab" data-filter="north" aria-pressed="false">North <span>4</span></button>
+          <button class="tab" data-filter="south" aria-pressed="false">South <span>4</span></button>
+          <button class="tab" data-filter="east" aria-pressed="false">East <span>4</span></button>
+          <button class="tab" data-filter="west" aria-pressed="false">West <span>4</span></button>
+        </div>
+        <p class="beaches__count" id="beachCount" aria-live="polite">Showing 16 beaches</p>
+
+        <div class="beach-grid" id="beachGrid"><!-- cards are built in script.js (BEACHES) --></div>
+      </div>
+    </section>
+
+    <!-- ========== GALLERY ========== -->
+    <section class="sec sec--white" id="gallery" aria-labelledby="galleryTitle">
+      <div class="sec__inner">
+        <header class="sec-head sec-head--center">
+          <p class="eyebrow">Gallery</p>
+          <h2 class="explore__title" id="galleryTitle">Moments <em>by the Shore</em></h2>
+          <p class="explore__text">Tap any photo to open it full-screen.</p>
+        </header>
+        <div class="tabs tabs--center" id="galleryTabs" role="group" aria-label="Filter gallery by zone">
+          <button class="tab is-active" data-filter="all" aria-pressed="true">All</button>
+          <button class="tab" data-filter="north" aria-pressed="false">North</button>
+          <button class="tab" data-filter="south" aria-pressed="false">South</button>
+          <button class="tab" data-filter="east" aria-pressed="false">East</button>
+          <button class="tab" data-filter="west" aria-pressed="false">West</button>
+        </div>
+        <div class="shots" id="shots"><!-- photos are built in script.js (SHOTS) --></div>
+      </div>
+    </section>
+
+    <!-- ========== GETTING TO PARADISE ========== -->
+    <section class="sec" id="travel" aria-labelledby="travelTitle">
+      <div class="sec__inner">
+        <header class="sec-head sec-head--center">
+          <p class="eyebrow">Plan your journey</p>
+          <h2 class="explore__title" id="travelTitle">Getting to <em>Paradise</em></h2>
+          <p class="explore__text">Partner offers to help you reach every destination.</p>
+        </header>
+        <div class="travel-grid">
+          <article class="travel-card">
+            <img src="images/beach-maldives.jpg" alt="Flights" width="600" height="400" loading="lazy" />
+            <div class="travel-card__body">
+              <h3>Flights</h3>
+              <p>Seasonal fares to island gateways from Malé to Montego Bay. Save up to 30% on off-peak departures.</p>
+              <a class="btn btn--navy" href="#contact">Find Flights</a>
+            </div>
+          </article>
+          <article class="travel-card">
+            <img src="images/beach-med.jpg" alt="Bus" width="600" height="400" loading="lazy" />
+            <div class="travel-card__body">
+              <h3>Bus</h3>
+              <p>Scenic coastal coaches along the Amalfi, Pacific and Great Ocean roads — comfortable and eco-friendly.</p>
+              <a class="btn btn--navy" href="#contact">Book a Seat</a>
+            </div>
+          </article>
+          <article class="travel-card">
+            <img src="images/zone-east.jpg" alt="Travel Packages" width="600" height="400" loading="lazy" />
+            <div class="travel-card__body">
+              <h3>Travel Packages</h3>
+              <p>Curated beach escapes with stays, transfers and guided island hopping, all in one simple booking.</p>
+              <a class="btn btn--navy" href="#contact">Explore Packages</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== FEEDBACK ========== -->
+    <section class="sec sec--mint" id="feedback" aria-labelledby="feedbackTitle">
+      <div class="sec__inner split">
+        <header class="sec-head">
+          <p class="eyebrow">Feedback</p>
+          <h2 class="explore__title" id="feedbackTitle">How was your <em>journey with us?</em></h2>
+          <p class="explore__text">Your thoughts help us curate better destinations and a smoother experience for every traveller.</p>
+        </header>
+        <form class="form" data-form="feedback">
+          <div class="field"><label for="fbName">Name</label><input id="fbName" name="name" type="text" autocomplete="name" required /></div>
+          <div class="field"><label for="fbEmail">Email</label><input id="fbEmail" name="email" type="email" autocomplete="email" required /></div>
+          <fieldset class="field rating"><legend>Rating</legend><div class="stars"><input type="radio" id="r5" name="rating" value="5" required /><label for="r5" title="5 stars"><span class="sr">5 stars</span>★</label><input type="radio" id="r4" name="rating" value="4" required /><label for="r4" title="4 stars"><span class="sr">4 stars</span>★</label><input type="radio" id="r3" name="rating" value="3" required /><label for="r3" title="3 stars"><span class="sr">3 stars</span>★</label><input type="radio" id="r2" name="rating" value="2" required /><label for="r2" title="2 stars"><span class="sr">2 stars</span>★</label><input type="radio" id="r1" name="rating" value="1" required /><label for="r1" title="1 star"><span class="sr">1 star</span>★</label></div></fieldset>
+          <div class="field"><label for="fbMsg">Feedback</label><textarea id="fbMsg" name="message" rows="4" required></textarea></div>
+          <button class="btn btn--primary" type="submit">Submit Feedback</button>
+          <p class="form__note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========== ABOUT ========== -->
+    <section class="sec sec--navy" id="about" aria-labelledby="aboutTitle">
+      <div class="sec__inner split split--about">
+        <div>
+          <p class="eyebrow">About Us</p>
+          <h2 class="explore__title" id="aboutTitle">Born from a love of salt, sand and <em>horizons.</em></h2>
+          <p class="explore__text">BeautyOfBeaches is an independent discovery platform helping travellers find, compare and fall in love with the world's most famous beaches. From Iceland's volcanic shores to the Caribbean's golden sunsets, we bring accurate, inspiring information together in one place.</p>
+          <div class="mv">
+            <div class="mv__card"><h3>Our Mission</h3><p>To make exploring the world's beaches simple, inspiring and accessible to everyone.</p></div>
+            <div class="mv__card"><h3>Our Vision</h3><p>A world where every traveller discovers coastlines responsibly and protects them for tomorrow.</p></div>
+          </div>
+        </div>
+        <div class="collage" aria-hidden="false">
+          <img class="collage__a" src="images/beach-granite.jpg" alt="Granite boulders on a Seychelles beach" width="600" height="760" loading="lazy" />
+          <img class="collage__b" src="images/zone-west.jpg" alt="Sunset on a Caribbean beach" width="500" height="400" loading="lazy" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ========== QUERIES ========== -->
+    <section class="sec" id="queries" aria-labelledby="queriesTitle">
+      <div class="sec__inner split">
+        <header class="sec-head">
+          <p class="eyebrow">Queries</p>
+          <h2 class="explore__title" id="queriesTitle">Have a <em>Question?</em></h2>
+          <p class="explore__text">Ask us anything about destinations, seasons or travel planning.</p>
+        </header>
+        <form class="form" data-form="query">
+          <div class="field"><label for="qName">Name</label><input id="qName" name="name" type="text" autocomplete="name" required /></div>
+          <div class="field"><label for="qEmail">Email</label><input id="qEmail" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field"><label for="qSubject">Subject</label><input id="qSubject" name="subject" type="text" required /></div>
+          <div class="field"><label for="qMsg">Your query</label><textarea id="qMsg" name="message" rows="4" required></textarea></div>
+          <button class="btn btn--primary" type="submit">Send Query</button>
+          <p class="form__note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========== CONTACT ========== -->
+    <section class="sec sec--white" id="contact" aria-labelledby="contactTitle">
+      <div class="sec__inner split">
+        <div>
+          <header class="sec-head">
+            <p class="eyebrow">Contact Us</p>
+            <h2 class="explore__title" id="contactTitle">Let's Plan <em>Your Escape</em></h2>
+          </header>
+          <ul class="contact-list">
+            <li><span class="contact-list__icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22 6 12 13 2 6"/></svg></span><div><small>Email</small><a href="mailto:hello@beautyofbeaches.com">hello@beautyofbeaches.com</a></div></li>
+            <li><span class="contact-list__icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span><div><small>Phone</small><a href="tel:+922134567890">+92 21 3456 7890</a></div></li>
+            <li><span class="contact-list__icon"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg></span><div><small>Address</small><span>Seaview Tower, Clifton Block 4, Karachi, Pakistan</span></div></li>
+          </ul>
+        </div>
+        <form class="form" data-form="contact">
+          <div class="field"><label for="cName">Name</label><input id="cName" name="name" type="text" autocomplete="name" required /></div>
+          <div class="field"><label for="cEmail">Email</label><input id="cEmail" name="email" type="email" autocomplete="email" required /></div>
+          <div class="field"><label for="cMsg">Message</label><textarea id="cMsg" name="message" rows="4" required></textarea></div>
+          <button class="btn btn--primary" type="submit">Send Message</button>
+          <p class="form__note" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+
+    <!-- ========== SITEMAP ========== -->
+    <section class="sec" id="sitemap" aria-labelledby="sitemapTitle">
+      <div class="sec__inner">
+        <header class="sec-head sec-head--center">
+          <p class="eyebrow">Sitemap</p>
+          <h2 class="explore__title" id="sitemapTitle">Find <em>Your Way</em></h2>
+        </header>
+        <ul class="sitemap">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#beaches">Explore Beaches</a></li>
+          <li><a href="#beaches" data-filter-link="north">North Zone</a></li>
+          <li><a href="#beaches" data-filter-link="south">South Zone</a></li>
+          <li><a href="#beaches" data-filter-link="east">East Zone</a></li>
+          <li><a href="#beaches" data-filter-link="west">West Zone</a></li>
+          <li><a href="#gallery">Gallery</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#queries">Queries</a></li>
+          <li><a href="#contact">Contact Us</a></li>
+          <li><a href="#sitemap">Sitemap</a></li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ========== FOOTER ========== -->
+  <footer class="footer">
+    <div class="footer__inner">
+      <div class="footer__brand">
+        <a href="#home" class="nav__logo"><span class="nav__logo-text">Beauty<em>Of</em>Beaches</span></a>
+        <p>Your guide to the world's most beautiful beaches, organised by North, South, East and West.</p>
+        <div class="socials">
+          <a href="#home" aria-label="Facebook"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a><a href="#home" aria-label="Instagram"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></a>
+          <a href="#home" aria-label="Twitter"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"/></svg></a><a href="#home" aria-label="YouTube"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/></svg></a>
+        </div>
+      </div>
+      <div><h4>Quick Links</h4><ul>
+        <li><a href="#home">Home</a></li><li><a href="#beaches">Explore Beaches</a></li><li><a href="#zones">Zones</a></li>
+        <li><a href="#gallery">Gallery</a></li><li><a href="#about">About Us</a></li><li><a href="#queries">Queries</a></li>
+        <li><a href="#contact">Contact Us</a></li><li><a href="#sitemap">Sitemap</a></li></ul></div>
+      <div><h4>Zones</h4><ul>
+        <li><a href="#beaches" data-filter-link="north">North Zone</a></li><li><a href="#beaches" data-filter-link="south">South Zone</a></li>
+        <li><a href="#beaches" data-filter-link="east">East Zone</a></li><li><a href="#beaches" data-filter-link="west">West Zone</a></li></ul></div>
+      <div><h4>Contact</h4><ul>
+        <li><a href="mailto:hello@beautyofbeaches.com">hello@beautyofbeaches.com</a></li>
+        <li><a href="tel:+922134567890">+92 21 3456 7890</a></li><li>Clifton Block 4, Karachi, Pakistan</li></ul></div>
+    </div>
+    <p class="footer__copy">© <span id="year">2026</span> BeautyOfBeaches. All rights reserved.</p>
+  </footer>
+
+  <!-- Beach details modal -->
+  <dialog class="modal" id="beachModal" aria-labelledby="mTitle">
+    <form method="dialog"><button class="modal__close" aria-label="Close">×</button></form>
+    <img id="mImg" src="" alt="" width="640" height="360" />
+    <div class="modal__body">
+      <span class="badge" id="mZone"></span>
+      <h3 id="mTitle"></h3>
+      <p class="modal__place" id="mPlace"></p>
+      <p id="mDesc"></p>
+      <div class="modal__actions">
+        <button type="button" class="btn btn--primary" id="mDownload">Download guide</button>
+        <a class="btn btn--navy" href="#gallery" id="mGallery">View Gallery</a>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- Gallery lightbox -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Photo viewer" hidden>
+    <button class="lb-close" id="lbClose" aria-label="Close photo">×</button>
+    <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous photo">‹</button>
+    <figure><img id="lbImg" src="" alt="" /><figcaption id="lbCap"></figcaption></figure>
+    <button class="lb-nav lb-next" id="lbNext" aria-label="Next photo">›</button>
+  </div>
+
+  <!-- Back to top -->
+  <button class="to-top" id="toTop" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
+  </button>
+
+  <script src="script.js"></script>
+</body>
+</html>
